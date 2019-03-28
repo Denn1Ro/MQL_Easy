@@ -36,7 +36,7 @@ enum ENUM_ROUNDING
 //|               CUtilitiesBase Class             
 //+------------------------------------------------------------------+
 class CUtilitiesBase
-  {
+  {     
 protected:
    int               BarsOnChart;
    string            Symbol;
@@ -109,6 +109,7 @@ bool CUtilitiesBase::CheckSymbol(string symbolPar)
 //+------------------------------------------------------------------+
 double CUtilitiesBase::Ask(void)
 {
+   ResetLastError();
    double askTemp = SymbolInfoDouble(this.Symbol,SYMBOL_ASK); 
    //-- check if any error occurs
    if(this.Error.CheckLastError(true,__FUNCTION__))return WRONG_VALUE;
@@ -122,6 +123,7 @@ double CUtilitiesBase::Ask(void)
 //+------------------------------------------------------------------+
 double CUtilitiesBase::Bid(void)
 {
+   ResetLastError();
    double bidTemp = SymbolInfoDouble(this.Symbol,SYMBOL_BID); 
    //-- check if any error occurs
    if(this.Error.CheckLastError(true,__FUNCTION__))return WRONG_VALUE;
@@ -135,6 +137,7 @@ double CUtilitiesBase::Bid(void)
 //+------------------------------------------------------------------+
 long CUtilitiesBase::Digits(void)
 {
+   ResetLastError();
    long digitsTemp = SymbolInfoInteger(this.Symbol,SYMBOL_DIGITS); 
    //-- check if any error occurs
    if(this.Error.CheckLastError(true,__FUNCTION__))return WRONG_VALUE;
@@ -148,6 +151,7 @@ long CUtilitiesBase::Digits(void)
 //+------------------------------------------------------------------+
 double CUtilitiesBase::Point(void)
 {
+   ResetLastError();
    double pointTemp = SymbolInfoDouble(this.Symbol,SYMBOL_POINT); 
    //-- check if any error occurs
    if(this.Error.CheckLastError(true,__FUNCTION__))return WRONG_VALUE;
@@ -161,6 +165,7 @@ double CUtilitiesBase::Point(void)
 //+------------------------------------------------------------------+  
 double CUtilitiesBase::Pip(void)
 {
+   ResetLastError();
    ulong digits     = SymbolInfoInteger(this.Symbol,SYMBOL_DIGITS);
    //-- check if any error occurs
    if(this.Error.CheckLastError(true,__FUNCTION__))return WRONG_VALUE;
@@ -190,6 +195,7 @@ bool CUtilitiesBase::IsNewBar(ENUM_TIMEFRAMES periodPar = PERIOD_CURRENT)
 //+------------------------------------------------------------------+
 double CUtilitiesBase::NormalizePrice(double pricePar, ENUM_ROUNDING roundPar = 0)
 {
+   ResetLastError();
    double tickSize = SymbolInfoDouble(this.Symbol,SYMBOL_TRADE_TICK_SIZE);
    //-- check if any error occurs
    if(this.Error.CheckLastError(true,__FUNCTION__))return WRONG_VALUE;
@@ -209,6 +215,7 @@ double CUtilitiesBase::NormalizePrice(double pricePar, ENUM_ROUNDING roundPar = 
 //+------------------------------------------------------------------+
 double CUtilitiesBase::NormalizeVolume(double lotsPar, ENUM_ROUNDING roundPar=0)
 {
+   ResetLastError();
    double lotStep = SymbolInfoDouble(this.Symbol,SYMBOL_VOLUME_STEP);
    //-- check if any error occurs
    if(this.Error.CheckLastError(true,__FUNCTION__))return WRONG_VALUE;
