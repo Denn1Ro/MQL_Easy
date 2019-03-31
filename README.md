@@ -37,6 +37,70 @@ To start working with the library all you need are 3 steps.
 (The above line of code includes all the library’s files and make them available)
 
 
+Example:
+
+//+------------------------------------------------------------------+
+//|                                             MQL_Easy_Example.mq5 |
+//|                           Copyright 2018, Dionisis Nikolopoulos. |
+//|                                                                  |
+//+------------------------------------------------------------------+
+#property copyright "Copyright 2018, Dionisis Nikolopoulos."
+#property link      ""
+#property version   "1.00"
+
+#include <MQL_Easy/MQL_Easy.mqh>
+//-- Object that execute trades
+CExecute execute;
+//-- Object that manage trades
+CPosition position;
+
+//+------------------------------------------------------------------+
+//| Script program start function                                    |
+//+------------------------------------------------------------------+
+void OnStart()
+  {
+//---
+   //-- Set the symbol and magic number to the objects
+   string symbol = _Symbol;
+   int magicNumber = 12345;
+   execute.SetSymbol(symbol);
+   execute.SetMagicNumber(magicNumber);
+   position.SetGroupSymbol(symbol);
+   position.SetGroupMagicNumber(magicNumber);
+   
+   //-- Create a trade Position BUY 
+   ENUM_TYPE_POSITION type = TYPE_POSITION_BUY;
+   double volume = 0.10;
+   double stopLoss = 20;
+   double takeProfit = 20;    
+   execute.Position(type,volume,stopLoss,takeProfit,SLTP_PIPS);
+   
+   //-- Collect Information about the trade
+   if(position.SelectByIndex(0)){
+      long ticket       = position.GetTicket();
+      double openPrice  = position.GetPriceOpen();  
+      Print("#Ticket: "+(string)ticket+", OpenPrice: "+(string)openPrice);    
+   }   
+   //-- delay for visual purposes
+   Sleep(2000);
+   //-- Modify the position using quick access feature
+   position[0].Modify(50,50,SLTP_PIPS);
+   //-- delay for visual purposes
+   Sleep(2000);
+   //-- Again Modify the position using quick access feature
+   position[0].Modify(300,300,SLTP_POINTS);
+   //-- delay for visual purposes
+   Sleep(2000);
+   //-- Close the position
+   position[0].Close();  
+
+   
+  }
+//+------------------------------------------------------------------+
+#### This example of code is written in MQL5 editor but it runs and works properly on both platforms.
+
+
+
 # MQL_Easy.mql
 The MQL_ Easy.mqh is an include file that contains all the others includes files.
 It is a quick way to get started without necessary know the names of classes. In addition, if the development requires heavy usage of the MQL_Easy library then you can find them all in one place.  
