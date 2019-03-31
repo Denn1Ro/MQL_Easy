@@ -44,6 +44,7 @@ Example:
 //|                           Copyright 2018, Dionisis Nikolopoulos. |
 //|                                                                  |
 //+------------------------------------------------------------------+
+
 #property copyright "Copyright 2018, Dionisis Nikolopoulos."
 #property link      ""
 #property version   "1.00"
@@ -57,6 +58,7 @@ CPosition position;
 //+------------------------------------------------------------------+
 //| Script program start function                                    |
 //+------------------------------------------------------------------+
+
 void OnStart()
   {
 //---
