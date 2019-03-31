@@ -38,7 +38,7 @@ To start working with the library all you need are 3 steps.
 
 
 Example:
-
+```
 //+------------------------------------------------------------------+
 //|                                             MQL_Easy_Example.mq5 |
 //|                           Copyright 2018, Dionisis Nikolopoulos. |
@@ -97,6 +97,7 @@ void OnStart()
    
   }
 //+------------------------------------------------------------------+
+```
 #### This example of code is written in MQL5 editor but it runs and works properly on both platforms.
 
 
