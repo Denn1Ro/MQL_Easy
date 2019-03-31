@@ -40,13 +40,9 @@ To start working with the library all you need are 3 steps.
 Example:
 ```
 //+------------------------------------------------------------------+
-
 //|                                             MQL_Easy_Example.mq5 |
-
 //|                           Copyright 2018, Dionisis Nikolopoulos. |
-
 //|                                                                  |
-
 //+------------------------------------------------------------------+
 
 #property copyright "Copyright 2018, Dionisis Nikolopoulos."
@@ -60,9 +56,7 @@ CExecute execute;
 CPosition position;
 
 //+------------------------------------------------------------------+
-
 //| Script program start function                                    |
-
 //+------------------------------------------------------------------+
 
 void OnStart()
