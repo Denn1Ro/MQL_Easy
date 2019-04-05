@@ -15,7 +15,6 @@
 class CHistoryOrder : public CHistoryOrderBase
   {
 protected:
-   CHistoryOrder           *mObject;  
    bool                    HistoryRange(datetime datePar);
 
 public:
@@ -57,7 +56,6 @@ CHistoryOrder::CHistoryOrder(string symbolPar = NULL, long magicNumberPar = WRON
 //+------------------------------------------------------------------+
 CHistoryOrder::~CHistoryOrder()
   {
-    if(CheckPointer(this.mObject) == POINTER_DYNAMIC)delete this.mObject;
   }
 //+------------------------------------------------------------------+
 
@@ -67,13 +65,12 @@ CHistoryOrder::~CHistoryOrder()
 //+------------------------------------------------------------------+
 CHistoryOrder* CHistoryOrder::operator[](const int indexPar)
 {
-   if(CheckPointer(this.mObject) == POINTER_INVALID)this.mObject = new CHistoryOrder(this.GroupSymbol,this.GroupMagicNumber,this.Group);
    long ticketTemp = this.SelectByIndex(indexPar);
    if(ticketTemp == -1){
       string msgTemp = "The History Order WAS NOT selected.";
       this.Error.CreateErrorCustom(msgTemp);
    }
-   return this.mObject;
+   return GetPointer(this);
 } 
 
 
@@ -82,9 +79,8 @@ CHistoryOrder* CHistoryOrder::operator[](const int indexPar)
 //+------------------------------------------------------------------+
 CHistoryOrder* CHistoryOrder::operator[](const long ticketPar)
 {
-   if(CheckPointer(this.mObject) == POINTER_INVALID)this.mObject = new CHistoryOrder(this.GroupSymbol,this.GroupMagicNumber,this.Group);
    this.SelectByTicket(ticketPar);
-   return this.mObject;
+   return GetPointer(this);
 }
 
 

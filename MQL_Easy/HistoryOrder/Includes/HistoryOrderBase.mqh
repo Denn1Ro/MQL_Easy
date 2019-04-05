@@ -86,7 +86,7 @@ CHistoryOrderBase::CHistoryOrderBase(string symbolPar = NULL, long magicNumberPa
    this.GroupMagicNumber   = magicNumberPar;
    this.Group              = groupPar;
    this.StartDate          = startDatePar;
-   this.EndDate            = endDatePar;
+   this.EndDate            = (endDatePar == 0) ? TimeCurrent() : endDatePar;
    this.mTicket            = -1;
   }
   

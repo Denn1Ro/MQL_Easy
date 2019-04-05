@@ -14,8 +14,6 @@
 //+------------------------------------------------------------------+
 class COrder : public COrderBase
   {
-protected:
-   COrderBase              *mObject;  
 
 public:
                            COrder(string symbolPar = NULL, long magicNumberPar = WRONG_VALUE, GROUP_ORDERS groupPar = GROUP_ORDERS_ALL);
@@ -57,7 +55,6 @@ COrder::COrder(string symbolPar = NULL, long magicNumberPar = WRONG_VALUE, GROUP
 //+------------------------------------------------------------------+
 COrder::~COrder()
   {
-   if(CheckPointer(this.mObject) == POINTER_DYNAMIC)delete this.mObject;
   }
 //+------------------------------------------------------------------+
 
@@ -67,9 +64,12 @@ COrder::~COrder()
 //+------------------------------------------------------------------+
 COrder* COrder::operator[](const int indexPar)
 {
-   if(CheckPointer(this.mObject) == POINTER_INVALID)this.mObject = new COrder(this.GroupSymbol,this.GroupMagicNumber,this.Group);
    long ticketTemp = this.SelectByIndex(indexPar);
-   return this.mObject;
+   if(ticketTemp == -1){
+      string msgTemp = "The Position with index "+(string)indexPar+" WAS NOT selected.";
+      this.Error.CreateErrorCustom(msgTemp);
+   }
+   return GetPointer(this);
 } 
 
 
@@ -78,9 +78,8 @@ COrder* COrder::operator[](const int indexPar)
 //+------------------------------------------------------------------+
 COrder* COrder::operator[](const long ticketPar)
 {
-   if(CheckPointer(this.mObject) == POINTER_INVALID)this.mObject = new COrder(this.GroupSymbol,this.GroupMagicNumber,this.Group);
    this.SelectByTicket(ticketPar);
-   return this.mObject;
+   return GetPointer(this);
 }
 
 

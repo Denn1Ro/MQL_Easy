@@ -14,8 +14,6 @@
 //+------------------------------------------------------------------+
 class CPosition : public CPositionBase
   {
-protected:
-   CPosition               *mObject;  
 
 public:
                            CPosition(string symbolPar = NULL, long magicNumberPar = WRONG_VALUE, GROUP_POSITIONS groupPar = GROUP_POSITIONS_ALL);
@@ -60,7 +58,6 @@ CPosition::CPosition(string symbolPar = NULL, long magicNumberPar = WRONG_VALUE,
 //+------------------------------------------------------------------+
 CPosition::~CPosition()
   {
-   if(CheckPointer(this.mObject) == POINTER_DYNAMIC)delete this.mObject;
   }
 //+------------------------------------------------------------------+
 
@@ -70,13 +67,12 @@ CPosition::~CPosition()
 //+------------------------------------------------------------------+
 CPosition* CPosition::operator[](const int indexPar)
 {
-   if(CheckPointer(this.mObject) == POINTER_INVALID)this.mObject = new CPosition(this.GroupSymbol,this.GroupMagicNumber,this.Group);
    long ticketTemp = this.SelectByIndex(indexPar);
    if(ticketTemp == -1){
       string msgTemp = "The Position with index "+(string)indexPar+" WAS NOT selected.";
       this.Error.CreateErrorCustom(msgTemp);
    }
-   return this.mObject;
+   return GetPointer(this);
 } 
 
 
@@ -85,9 +81,8 @@ CPosition* CPosition::operator[](const int indexPar)
 //+------------------------------------------------------------------+
 CPosition* CPosition::operator[](const long ticketPar)
 {
-   if(CheckPointer(this.mObject) == POINTER_INVALID)this.mObject = new CPosition(this.GroupSymbol,this.GroupMagicNumber,this.Group);
    this.SelectByTicket(ticketPar);
-   return this.mObject;
+   return GetPointer(this);
 }
 
 

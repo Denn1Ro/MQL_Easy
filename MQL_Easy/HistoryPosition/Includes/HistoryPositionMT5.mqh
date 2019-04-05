@@ -15,7 +15,6 @@
 class CHistoryPosition : public CHistoryPositionBase
   {
 protected:
-   CHistoryPosition        *mObject;  
    bool                    HistoryRange(void);
 
 public:
@@ -62,7 +61,6 @@ CHistoryPosition::CHistoryPosition(string symbolPar = NULL, long magicNumberPar 
 //+------------------------------------------------------------------+
 CHistoryPosition::~CHistoryPosition()
   {
-   if(CheckPointer(this.mObject) == POINTER_DYNAMIC)delete this.mObject;
   }
 //+------------------------------------------------------------------+
 
@@ -73,13 +71,12 @@ CHistoryPosition::~CHistoryPosition()
 //+------------------------------------------------------------------+
 CHistoryPosition* CHistoryPosition::operator[](const int indexPar)
 {
-   if(CheckPointer(this.mObject) == POINTER_INVALID)this.mObject = new CHistoryPosition(this.GroupSymbol,this.GroupMagicNumber,this.Group);
    long ticketTemp = this.SelectByIndex(indexPar);
    if(ticketTemp == -1){
       string msgTemp = "The History Order WAS NOT selected.";
       this.Error.CreateErrorCustom(msgTemp);
    }
-   return this.mObject;
+   return GetPointer(this);
 } 
 
 
@@ -88,9 +85,8 @@ CHistoryPosition* CHistoryPosition::operator[](const int indexPar)
 //+------------------------------------------------------------------+
 CHistoryPosition* CHistoryPosition::operator[](const long ticketPar)
 {
-   if(CheckPointer(this.mObject) == POINTER_INVALID)this.mObject = new CHistoryPosition(this.GroupSymbol,this.GroupMagicNumber,this.Group);
    this.SelectByTicket(ticketPar);
-   return this.mObject;
+   return GetPointer(this);
 }
 
 
@@ -119,7 +115,6 @@ long CHistoryPosition::SelectByIndex(int indexPar)
 {
    //-- Reset the ticket
    this.mTicket = -1;
-   this.mObject.mTicket = (CheckPointer(this.mObject) != POINTER_INVALID) ? this.mTicket : -1;
    //-- Set History Range
    if(!this.HistoryRange())return-1;   
    
@@ -134,7 +129,6 @@ long CHistoryPosition::SelectByIndex(int indexPar)
          { 	
             if(numberPositions == indexPar){
                this.mTicket = HistoryDealGetInteger(ticketTemp,DEAL_POSITION_ID);
-               this.mObject.mTicket = (CheckPointer(this.mObject) != POINTER_INVALID) ? this.mTicket : -1;
                return ticketTemp;   
             }
             numberPositions++; 
@@ -164,10 +158,8 @@ bool CHistoryPosition::SelectByTicket(long ticketPar)
 {
    //-- Reset the ticket
    this.mTicket = -1;
-   this.mObject.mTicket = (CheckPointer(this.mObject) != POINTER_INVALID) ? this.mTicket : -1;
    if(HistoryDealSelect(ticketPar)){   
       this.mTicket         = ticketPar;
-      this.mObject.mTicket = (CheckPointer(this.mObject) != POINTER_INVALID) ? this.mTicket : -1;
       this.ValidSelection  = true;
       return true;
    }
