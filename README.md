@@ -44,7 +44,6 @@ Example:
 //|                           Copyright 2018, Dionisis Nikolopoulos. |
 //|                                                                  |
 //+------------------------------------------------------------------+
-
 #property copyright "Copyright 2018, Dionisis Nikolopoulos."
 #property link      ""
 #property version   "1.00"
@@ -58,7 +57,6 @@ CPosition position;
 //+------------------------------------------------------------------+
 //| Script program start function                                    |
 //+------------------------------------------------------------------+
-
 void OnStart()
   {
 //---
@@ -76,9 +74,10 @@ void OnStart()
    double stopLoss = 20;
    double takeProfit = 20;    
    execute.Position(type,volume,stopLoss,takeProfit,SLTP_PIPS);
-   
+   //-- delay for visual purpose and slow brokers
+   Sleep(2000);
    //-- Collect Information about the trade
-   if(position.SelectByIndex(0)){
+   if(position.SelectByIndex(0) != -1){
       long ticket       = position.GetTicket();
       double openPrice  = position.GetPriceOpen();  
       Print("#Ticket: "+(string)ticket+", OpenPrice: "+(string)openPrice);    
