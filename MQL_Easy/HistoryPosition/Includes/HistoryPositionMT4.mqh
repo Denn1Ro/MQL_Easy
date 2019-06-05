@@ -250,6 +250,22 @@ int CHistoryPosition::GetType(void)
    return(OrderType());
   }
 //+------------------------------------------------------------------+
+//|      get the stoploss of a position
+//+------------------------------------------------------------------+
+double CHistoryPosition::GetStopLoss(void)
+  {
+   if(!this.ValidSelection)return -1;
+   return(OrderStopLoss());
+  }
+//+------------------------------------------------------------------+
+//|      get the takeprofit of a position
+//+------------------------------------------------------------------+
+double CHistoryPosition::GetTakeProfit(void)
+  {
+   if(!this.ValidSelection)return -1;
+   return(OrderTakeProfit());
+  }    
+//+------------------------------------------------------------------+
 //|      get the time open of a position
 //+------------------------------------------------------------------+
 datetime CHistoryPosition::GetTimeOpen(void)
