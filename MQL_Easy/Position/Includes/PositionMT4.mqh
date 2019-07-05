@@ -35,6 +35,7 @@ public:
    virtual double          GetTakeProfit();
    virtual double          GetSwap();
    virtual double          GetProfit();
+   virtual double          GetCommission();
    virtual string          GetSymbol();
    virtual string          GetComment();
    virtual bool            Close(uint triesPar = 20);
@@ -359,6 +360,16 @@ double CPosition::GetProfit(void)
 {
    if(!this.ValidSelection)return -1;
    return OrderProfit();
+}
+
+
+//+------------------------------------------------------------------+
+//|      get the commission of a position
+//+------------------------------------------------------------------+
+double CPosition::GetCommission(void)
+{
+   if(!this.ValidSelection)return -1;
+   return OrderCommission();
 }
 
 
