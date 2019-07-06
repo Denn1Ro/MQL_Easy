@@ -60,6 +60,7 @@ public:
    virtual double          GetTakeProfit(){return -1;}
    virtual double          GetSwap(){return -1;}
    virtual double          GetProfit(){return -1;}
+   virtual double          GetCommission(){return -1;}
    virtual string          GetSymbol(){return "";}
    virtual string          GetComment(){return "";}
    virtual bool            Close(uint triesPar = 20){return false;}
