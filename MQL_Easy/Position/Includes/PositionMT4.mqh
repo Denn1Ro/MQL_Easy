@@ -241,7 +241,7 @@ void CPosition::GroupCloseAll(uint triesPar = 20)
 		   if(!this.ValidPosition(symbolTemp,magicTemp,typeTemp))continue;
 		   color colorTemp   = (typeTemp == ORDER_TYPE_BUY) ? clrRed : clrLime;
 		   double priceTemp  = (typeTemp == ORDER_TYPE_BUY) ? SymbolInfoDouble(symbolTemp,SYMBOL_BID) : SymbolInfoDouble(symbolTemp,SYMBOL_ASK);
-		   bool resultTemp = OrderClose(OrderTicket(), OrderLots(), SymbolInfoDouble(symbolTemp,SYMBOL_BID), 3, clrRed);//actual Position closing
+		   bool resultTemp = OrderClose(OrderTicket(), OrderLots(), priceTemp, 3, colorTemp);//actual Position closing
 			if (resultTemp != true)
 			{
 			   string msgTemp = "The Position WAS NOT Closed.";
