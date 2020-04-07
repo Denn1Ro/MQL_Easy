@@ -95,7 +95,8 @@ bool CUtilitiesBase::SetSymbol(string symbolPar)
 //+------------------------------------------------------------------+
 bool CUtilitiesBase::CheckSymbol(string symbolPar)
 {
-   bool symbolCheck = SymbolSelect(symbolPar,true);
+   bool isSelected = SymbolInfoInteger(symbolPar,SYMBOL_SELECT);
+   bool symbolCheck = (!isSelected) ? SymbolSelect(symbolPar,true) : true;
    if(!symbolCheck){
       this.Error.CreateErrorCustom("The symbol "+symbolPar+" doesn't exist.");
       return false;

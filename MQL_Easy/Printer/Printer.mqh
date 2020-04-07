@@ -164,7 +164,7 @@ public:
                        ~CPrinter();
                         template<typename T>
    void                 Add(string key, T item);
-   void                 Print();
+   void                 PrintContent();
    string               GetContent();
    void                 SetTitle(string titlePar="DEBUG"){this.Title = titlePar;}
    void                 SetContainer(string containerPar = "-",int numberPar = 15);
@@ -214,7 +214,7 @@ void CPrinter::Add(string key, T item)
 //+------------------------------------------------------------------+
 //|     print the content
 //+------------------------------------------------------------------+
-void CPrinter::Print(void)
+void CPrinter::PrintContent(void)
 {
    Print(this.Container + this.Title + this.Container);
    string keys[];
