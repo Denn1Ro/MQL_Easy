@@ -41,18 +41,21 @@ Example:
 ```
 //+------------------------------------------------------------------+
 //|                                             MQL_Easy_Example.mq5 |
-//|                           Copyright 2018, Dionisis Nikolopoulos. |
+//|                           Copyright 2021, Dionisis Nikolopoulos. |
 //|                                                                  |
 //+------------------------------------------------------------------+
-#property copyright "Copyright 2018, Dionisis Nikolopoulos."
+#property copyright "Copyright 2021, Dionisis Nikolopoulos."
 #property link      ""
 #property version   "1.00"
+#property strict
 
 #include <MQL_Easy/MQL_Easy.mqh>
 //-- Object that execute trades
 CExecute execute;
 //-- Object that manage trades
 CPosition position;
+//-- Object that print messages
+CPrinter printer;
 
 //+------------------------------------------------------------------+
 //| Script program start function                                    |
@@ -73,32 +76,42 @@ void OnStart()
    double volume = 0.10;
    double stopLoss = 20;
    double takeProfit = 20;    
-   execute.Position(type,volume,stopLoss,takeProfit,SLTP_PIPS);
-   //-- delay for visual purpose and slow brokers
+   int deviation = 10;
+   string comment = "Test Position Execution";
+   execute.Position(type,volume,stopLoss,takeProfit,SLTP_PIPS,deviation,comment);
+   //-- delay for visual purpose
    Sleep(2000);
-   //-- Collect Information about the trade
+   //-- Check if the trade is executed
    if(position.SelectByIndex(0) != -1){
+      //-- Collect Information about the trade
       long ticket       = position.GetTicket();
       double openPrice  = position.GetPriceOpen();  
-      Print("#Ticket: "+(string)ticket+", OpenPrice: "+(string)openPrice);    
+      string message = "#Ticket: "+(string)ticket+", OpenPrice: "+(string)openPrice;
+      printer.SetTitle("REPORT");
+      printer.Add("Position Execution",message); 
+      //-- delay for visual purposes
+      Sleep(2000);
+      //-- Modify the position using quick access feature
+      position[0].Modify(50,50,SLTP_PIPS);
+      printer.Add("Modify TP SL by 50 pips","DONE"); 
+      //-- delay for visual purposes
+      Sleep(2000);
+      //-- Again Modify the position using quick access feature
+      position[0].Modify(300,300,SLTP_POINTS);
+      printer.Add("Modify TP SL by 300 points","DONE"); 
+      //-- delay for visual purposes
+      Sleep(2000);
+      //-- Close the position
+      position[0].Close();  
+      printer.Add("Position Close","DONE"); 
+      printer.PrintContent();
+   }else{
+      printer.Add("Status Position","Failed");
    }   
-   //-- delay for visual purposes
-   Sleep(2000);
-   //-- Modify the position using quick access feature
-   position[0].Modify(50,50,SLTP_PIPS);
-   //-- delay for visual purposes
-   Sleep(2000);
-   //-- Again Modify the position using quick access feature
-   position[0].Modify(300,300,SLTP_POINTS);
-   //-- delay for visual purposes
-   Sleep(2000);
-   //-- Close the position
-   position[0].Close();  
-
    
   }
 //+------------------------------------------------------------------+
-```
+
 #### This example of code is written in MQL5 editor but it runs and works properly on both platforms.
 
 
