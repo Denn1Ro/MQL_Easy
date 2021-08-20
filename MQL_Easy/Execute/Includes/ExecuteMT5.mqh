@@ -65,7 +65,7 @@ long CExecute::Position(ENUM_TYPE_POSITION positionTypePar,double volumePar,doub
    //-- Validation Checks
    if(!this.Validation(sltpPar,(ENUM_ORDER_TYPE)positionTypePar,priceTemp,stopLossPar,takeProfitPar,stoplossTemp,takeprofitTemp,volumePar,0))return ticketTemp;
    //-- Prepare a request 
-   MqlTradeRequest request = {0}; 
+   MqlTradeRequest request = {}; 
    request.action          = TRADE_ACTION_DEAL;         
    request.magic           = this.MagicNumber;                   
    request.symbol          = this.Symbol;                      
@@ -114,7 +114,7 @@ long CExecute::Order(ENUM_TYPE_ORDER orderTypePar,double volumePar,double openPr
    //-- Validation Checks
    if(!this.Validation(sltpPar,(ENUM_ORDER_TYPE)orderTypePar,priceTemp,stopLossPar,takeProfitPar,stoplossTemp,takeprofitTemp,volumePar,expirationPar))return ticketTemp;
    //--- prepare a request 
-   MqlTradeRequest request = {0}; 
+   MqlTradeRequest request = {}; 
    request.action          = TRADE_ACTION_PENDING;         
    request.magic           = this.MagicNumber;                   
    request.symbol          = this.Symbol;                      

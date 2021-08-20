@@ -253,8 +253,8 @@ void CPosition::GroupCloseAll(uint triesPar = 20)
 		   string symbolTemp = PositionGetString(POSITION_SYMBOL);
 		   ENUM_POSITION_TYPE typeTemp = (ENUM_POSITION_TYPE)PositionGetInteger(POSITION_TYPE);
 		   if(!this.ValidPosition(symbolTemp,magicTemp,(int)typeTemp))continue;
-		   MqlTradeRequest request ={0}; 
-		   MqlTradeResult result   ={0};
+		   MqlTradeRequest request ={}; 
+		   MqlTradeResult result   ={};
 			request.action          = TRADE_ACTION_DEAL;        
          request.position        = ticketTemp;          
          request.symbol          = symbolTemp;
@@ -437,8 +437,8 @@ bool CPosition::Close(uint triesPar = 20)
    for(uint i = 0; i < triesPar; i++)
 	{
 	   string symbolTemp             = this.GetSymbol();
-	   MqlTradeRequest request       = {0}; 
-	   MqlTradeResult result         = {0};
+	   MqlTradeRequest request       = {}; 
+	   MqlTradeResult result         = {};
 	   ENUM_POSITION_TYPE typeTemp   = (ENUM_POSITION_TYPE)this.GetType();
 		request.action                = TRADE_ACTION_DEAL;        
       request.position              = this.GetTicket();          
@@ -498,8 +498,8 @@ bool CPosition::ClosePartial(double volumePar, uint triesPar = 20)
    for(uint i = 0; i < triesPar; i++)
 	{
 	   string symbolTemp             = this.GetSymbol();
-	   MqlTradeRequest request       ={0}; 
-	   MqlTradeResult result         ={0};
+	   MqlTradeRequest request       ={}; 
+	   MqlTradeResult result         ={};
 	   ENUM_POSITION_TYPE typeTemp   = (ENUM_POSITION_TYPE)this.GetType();
 		request.action                = TRADE_ACTION_DEAL;        
       request.position              = this.GetTicket();          
@@ -570,7 +570,7 @@ bool CPosition::Modify(double stopLossPar = WRONG_VALUE,double takeProfitPar = W
    if(!validationCheck.CheckModifyLevels(this.GetTicket(),priceOpenTemp,stopLossTemp,takeProfitTemp,0))
       {this.Error.Copy(validationCheck.Error);return false;}                                                            
    //--- prepare a request 
-   MqlTradeRequest request    = {0}; 
+   MqlTradeRequest request    = {}; 
    request.action             = TRADE_ACTION_SLTP;         
    request.magic              = this.GetMagicNumber();                  
    request.symbol             = symbolTemp;

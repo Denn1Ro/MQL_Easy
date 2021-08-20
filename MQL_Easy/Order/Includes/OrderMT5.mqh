@@ -189,8 +189,8 @@ void COrder::GroupCloseAll(uint triesPar = 20)
 		   string symbolTemp             = OrderGetString(ORDER_SYMBOL);
 		   ENUM_ORDER_TYPE typeTemp      = (ENUM_ORDER_TYPE)OrderGetInteger(ORDER_TYPE);
 		   if(!this.ValidOrder(symbolTemp,magicTemp,(int)typeTemp))continue;
-		   MqlTradeRequest request       = {0}; 
-		   MqlTradeResult result         = {0};
+		   MqlTradeRequest request       = {}; 
+		   MqlTradeResult result         = {};
 			request.action                = TRADE_ACTION_REMOVE;                            
          request.order                 = ticketTemp;
          CUtilities utilsTemp;
@@ -333,8 +333,8 @@ bool COrder::Close(uint triesPar = 20)
    bool status = false;
    for(uint i = 0; i < triesPar; i++)
 	{
-	   MqlTradeRequest request = {0}; 
-		MqlTradeResult result   = {0};
+	   MqlTradeRequest request = {}; 
+		MqlTradeResult result   = {};
       request.action          = TRADE_ACTION_REMOVE;                   
       request.order           = this.GetTicket();
       CUtilities utilsTemp;
@@ -396,7 +396,7 @@ bool COrder::Modify(double priceOpenPar = WRONG_VALUE,double stopLossPar = WRONG
    //-- Check if there is no need to make any modification
    if(!validationCheckTemp.CheckModifyLevels(this.GetTicket(),priceOpenTemp,stopLossTemp,takeProfitTemp,1)){this.Error.Copy(validationCheckTemp.Error);return false;}
    //--- prepare a request 
-   MqlTradeRequest request    = {0}; 
+   MqlTradeRequest request    = {}; 
    request.action             = TRADE_ACTION_MODIFY;    
    request.symbol             = symbolTemp;       
    request.magic              = this.GetMagicNumber();  
