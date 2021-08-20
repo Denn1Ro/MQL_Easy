@@ -82,7 +82,7 @@ void OnStart()
    //-- delay for visual purpose
    Sleep(2000);
    //-- Check if the trade is executed
-   if(position.SelectByIndex(0) != -1){
+   if(position.GroupTotal() > 0 && position.SelectByIndex(0) != -1){
       //-- Collect Information about the trade
       long ticket       = position.GetTicket();
       double openPrice  = position.GetPriceOpen();  
@@ -105,12 +105,11 @@ void OnStart()
       position[0].Close();  
       printer.Add("Position Close","DONE"); 
       printer.PrintContent();
-   }else{
-      printer.Add("Status Position","Failed");
-   }   
-   
+   } 
+      
   }
 //+------------------------------------------------------------------+
+```
 
 #### This example of code is written in MQL5 editor but it runs and works properly on both platforms.
 
