@@ -1,15 +1,15 @@
 //+------------------------------------------------------------------+
 //|                                                     MQL_Easy.mqh |
-//|                           Copyright 2018, Dionisis Nikolopoulos. |
+//|                    Copyright 2019 - 2021, Dionisis Nikolopoulos. |
 //+------------------------------------------------------------------+
-#property copyright "Copyright 2018, Dionisis Nikolopoulos."
+#property copyright "Copyright 2019 - 2021, Dionisis Nikolopoulos."
 #property link      ""
 
 
 /*
 MIT License
 
-Copyright (c) 2019 Dionisis Nikolopoulos
+Copyright (c) 2019 - 2021 Dionisis Nikolopoulos
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

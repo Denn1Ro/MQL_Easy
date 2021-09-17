@@ -20,9 +20,12 @@ public:
                           ~CPosition();
    //-- Group Properties
    virtual int             GroupTotal();  
-   virtual double          GroupTotalVolume();      
+   virtual double          GroupTotalVolume();    
+   virtual double          GroupTotalNetVolume();  
    virtual double          GroupTotalProfit();   
    virtual double          GroupAverageOpenPrice();  
+   virtual double          GroupAveragePositionPrice();
+   virtual double          GroupAverageVolume();    
    virtual void            GroupCloseAll(uint triesPar = 20);
    //-- Position Properties           
    virtual long            GetTicket();
@@ -214,6 +217,34 @@ double CPosition::GroupTotalProfit(void)
 double CPosition::GroupAverageOpenPrice()
 {
    double avgPriceTemp   = 0;
+   double sumPriceTemp       = 0;   
+   double sumPositionsTemp   = 0;
+   for(int i = PositionsTotal() - 1; i>=0; i--){
+      ulong ticketTemp = PositionGetTicket(i);
+      if(ticketTemp > 0){
+         if(this.ValidPosition(PositionGetString(POSITION_SYMBOL),PositionGetInteger(POSITION_MAGIC),(int)PositionGetInteger(POSITION_TYPE))){
+            sumPriceTemp    += PositionGetDouble(POSITION_PRICE_OPEN);
+            sumPositionsTemp++;
+         }
+      }else{
+         string msgTemp = "The Position WAS NOT Selected.";
+         this.Error.CreateErrorCustom(msgTemp,true,false,(__FUNCTION__));
+      }
+   }
+   //-- check symbol
+   CUtilities utilsTemp;
+   if(!utilsTemp.SetSymbol(this.GetGroupSymbol())){this.Error.Copy(utilsTemp.Error);return -1;}
+   if(sumPositionsTemp !=0 )avgPriceTemp = utilsTemp.NormalizePrice(sumPriceTemp / sumPositionsTemp);
+   return avgPriceTemp;
+}
+
+
+//+------------------------------------------------------------------+
+//|     get the average position price of a group
+//+------------------------------------------------------------------+
+double CPosition::GroupAveragePositionPrice()
+{
+   double avgPriceTemp   = 0;
    double sumTemp        = 0;   
    double sumVolumeTemp  = 0;
    for(int i = PositionsTotal() - 1; i>=0; i--){
@@ -236,6 +267,57 @@ double CPosition::GroupAverageOpenPrice()
    return avgPriceTemp;
 }
 
+
+//+------------------------------------------------------------------+
+//|     get the average volume of a group
+//+------------------------------------------------------------------+
+double CPosition::GroupAverageVolume()
+{
+   double avgVolumesTemp   = 0;
+   double sumVolumesTemp   = 0;   
+   double nVolumesTemp   = 0;
+   for(int i = PositionsTotal() - 1; i>=0; i--){
+      ulong ticketTemp = PositionGetTicket(i);
+      if(ticketTemp > 0){
+         if(this.ValidPosition(PositionGetString(POSITION_SYMBOL),PositionGetInteger(POSITION_MAGIC),(int)PositionGetInteger(POSITION_TYPE))){
+            sumVolumesTemp   += PositionGetDouble(POSITION_VOLUME);
+            nVolumesTemp++;
+         }
+      }else{
+         string msgTemp = "The Position WAS NOT Selected.";
+         this.Error.CreateErrorCustom(msgTemp,true,false,(__FUNCTION__));
+      }
+   }
+   //-- check symbol
+   CUtilities utilsTemp;
+   if(!utilsTemp.SetSymbol(this.GetGroupSymbol())){this.Error.Copy(utilsTemp.Error);return -1;}
+   if(nVolumesTemp !=0 )avgVolumesTemp = utilsTemp.NormalizeVolume(sumVolumesTemp / nVolumesTemp);
+   return avgVolumesTemp;
+}
+
+
+
+
+//+------------------------------------------------------------------+
+//|     get the total net volume of a group
+//+------------------------------------------------------------------+
+double CPosition::GroupTotalNetVolume()
+{
+   double sumNetVolumesTemp   = 0;   
+   for(int i = PositionsTotal() - 1; i>=0; i--){
+      ulong ticketTemp = PositionGetTicket(i);
+      if(ticketTemp > 0){
+         if(this.ValidPosition(PositionGetString(POSITION_SYMBOL),PositionGetInteger(POSITION_MAGIC),(int)PositionGetInteger(POSITION_TYPE))){
+            int mulTemp          = (PositionGetInteger(POSITION_TYPE) == POSITION_TYPE_BUY) ? 1 : -1;
+            sumNetVolumesTemp   += mulTemp * PositionGetDouble(POSITION_VOLUME);
+         }
+      }else{
+         string msgTemp = "The Position WAS NOT Selected.";
+         this.Error.CreateErrorCustom(msgTemp,true,false,(__FUNCTION__));
+      }
+   }
+   return sumNetVolumesTemp;
+}
 
 //+------------------------------------------------------------------+
 //|      close all positions of a group

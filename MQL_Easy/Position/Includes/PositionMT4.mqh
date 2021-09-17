@@ -20,9 +20,12 @@ public:
                           ~CPosition();
    //-- Group Properties
    virtual int             GroupTotal();  
-   virtual double          GroupTotalVolume();      
+   virtual double          GroupTotalVolume();    
+   virtual double          GroupTotalNetVolume();  
    virtual double          GroupTotalProfit();   
    virtual double          GroupAverageOpenPrice();  
+   virtual double          GroupAveragePositionPrice();
+   virtual double          GroupAverageVolume(); 
    virtual void            GroupCloseAll(uint triesPar = 20);
    //-- Position Properties           
    virtual long            GetTicket();
@@ -202,6 +205,33 @@ double CPosition::GroupTotalProfit(void)
 //+------------------------------------------------------------------+
 double CPosition::GroupAverageOpenPrice()
 {
+   double avgPriceTemp     = 0;
+   double sumPriceTemp     = 0;   
+   double sumPositionsTemp = 0;
+   for(int i = OrdersTotal() - 1; i>=0; i--){
+      if(OrderSelect(i,SELECT_BY_POS,MODE_TRADES)){
+         if(this.ValidPosition(OrderSymbol(),OrderMagicNumber(),OrderType())){
+            sumPriceTemp    += OrderOpenPrice();
+            sumPositionsTemp++;
+         }
+      }else{
+         string msgTemp = "The Position WAS NOT Selected.";
+         this.Error.CreateErrorCustom(msgTemp,true,false,(__FUNCTION__));
+      }
+   }
+   CUtilities utilsTemp;
+   if(!utilsTemp.SetSymbol(this.GetGroupSymbol())){this.Error.Copy(utilsTemp.Error);return -1;}
+   if(sumPositionsTemp !=0 )avgPriceTemp = utilsTemp.NormalizePrice(MathAbs(sumPriceTemp / sumPositionsTemp));
+   return avgPriceTemp;
+}
+
+
+
+//+------------------------------------------------------------------+
+//|     get the average position price of a group
+//+------------------------------------------------------------------+
+double CPosition::GroupAveragePositionPrice()
+{
    double avgPriceTemp   = 0;
    double sumTemp        = 0;   
    double sumVolumeTemp  = 0;
@@ -221,6 +251,55 @@ double CPosition::GroupAverageOpenPrice()
    if(!utilsTemp.SetSymbol(this.GetGroupSymbol())){this.Error.Copy(utilsTemp.Error);return -1;}
    if(sumVolumeTemp !=0 )avgPriceTemp = utilsTemp.NormalizePrice(MathAbs(sumTemp / sumVolumeTemp));
    return avgPriceTemp;
+}
+
+
+//+------------------------------------------------------------------+
+//|     get the average volume of a group
+//+------------------------------------------------------------------+
+double CPosition::GroupAverageVolume()
+{
+   double avgVolumesTemp   = 0;
+   double sumVolumesTemp   = 0;   
+   double nVolumesTemp   = 0;
+   for(int i = OrdersTotal() - 1; i>=0; i--){
+      if(OrderSelect(i,SELECT_BY_POS,MODE_TRADES)){
+         if(this.ValidPosition(OrderSymbol(),OrderMagicNumber(),OrderType())){
+            sumVolumesTemp += OrderLots();
+            nVolumesTemp++;
+         }
+      }else{
+         string msgTemp = "The Position WAS NOT Selected.";
+         this.Error.CreateErrorCustom(msgTemp,true,false,(__FUNCTION__));
+      }
+   }
+   CUtilities utilsTemp;
+   if(!utilsTemp.SetSymbol(this.GetGroupSymbol())){this.Error.Copy(utilsTemp.Error);return -1;}
+   if(nVolumesTemp !=0 )avgVolumesTemp = utilsTemp.NormalizeVolume(MathAbs(sumVolumesTemp / nVolumesTemp));
+   return avgVolumesTemp;
+}
+
+
+
+
+//+------------------------------------------------------------------+
+//|     get the total net volume of a group
+//+------------------------------------------------------------------+
+double CPosition::GroupTotalNetVolume()
+{
+   double netVolumesTemp   = 0;
+   for(int i = OrdersTotal() - 1; i>=0; i--){
+      if(OrderSelect(i,SELECT_BY_POS,MODE_TRADES)){
+         if(this.ValidPosition(OrderSymbol(),OrderMagicNumber(),OrderType())){
+            int mulTemp     = (OrderType() == OP_BUY) ? 1 : -1;
+            netVolumesTemp += mulTemp * OrderLots();
+         }
+      }else{
+         string msgTemp = "The Position WAS NOT Selected.";
+         this.Error.CreateErrorCustom(msgTemp,true,false,(__FUNCTION__));
+      }
+   }
+   return netVolumesTemp;
 }
 
 

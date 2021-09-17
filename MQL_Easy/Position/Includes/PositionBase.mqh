@@ -46,8 +46,11 @@ public:
    //-- Group Properties
    virtual int             GroupTotal(){return -1;} 
    virtual double          GroupTotalVolume(){return -1;}      
-   virtual double          GroupTotalProfit(){return -1;}   
+   virtual double          GroupTotalProfit(){return -1;} 
+   virtual double          GroupTotalNetVolume(){return -1;}    
    virtual double          GroupAverageOpenPrice(){return -1;}  
+   virtual double          GroupAveragePositionPrice(){return -1;}  
+   virtual double          GroupAverageVolume(){return -1;}    
    virtual void            GroupCloseAll(uint triesPar = 20){return;}
    //-- Position Properties           
    virtual long            GetTicket(){return -1;}
