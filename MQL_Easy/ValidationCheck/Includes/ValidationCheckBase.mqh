@@ -54,10 +54,11 @@ bool CValidationCheckBase::CheckVolumeValue(string symbolPar, double volumePar)
      }
 
 //--- get minimal step of volume changing 
-   int ratio = (int)MathRound(volumePar/volumeStep);
-   if(MathAbs(ratio*volumeStep-volumePar)>0.0000001)
+   int ratio = (int)MathRound((volumePar - minVolume)/volumeStep);
+   double closestValue = ratio * volumeStep + minVolume;
+   if(MathAbs(closestValue - volumePar)>0.000000005)
      {
-      string msgTemp = "Volume is not a multiple of the minimal step SYMBOL_VOLUME_STEP = "+(string)volumeStep+", the closest correct volume is "+(string)(ratio*volumeStep);
+      string msgTemp = "Volume is not a multiple of the minimal step SYMBOL_VOLUME_STEP = "+(string)volumeStep+", the closest correct volume is "+(string)(closestValue);
       return this.Error.CreateErrorCustom(msgTemp);
      }
    return(true);

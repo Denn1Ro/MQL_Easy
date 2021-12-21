@@ -48,6 +48,12 @@ public:
                               int deviationPar = 10,string commentPar = NULL){return -1;}
    virtual long      Order(ENUM_TYPE_ORDER orderTypePar,double volumePar, double openPricePar, double stopLossPar = 0, double takeProfitPar = 0, 
                               ENUM_SLTP_TYPE sltpPar = 0, datetime expirationPar = 0,int deviationPar = 10, string commentPar = NULL){return -1;}
+   virtual void      PositionAsync(ENUM_TYPE_POSITION positionTypePar,double volumePar,double stopLossPar = 0,double takeProfitPar = 0,
+                              ENUM_SLTP_TYPE sltpPar = 0, int deviationPar = 10,string commentPar = NULL)
+                              {Position(positionTypePar,volumePar,stopLossPar,takeProfitPar,sltpPar,deviationPar,commentPar);}
+   virtual void      OrderAsync(ENUM_TYPE_ORDER orderTypePar,double volumePar, double openPricePar, double stopLossPar = 0, double takeProfitPar = 0, 
+                              ENUM_SLTP_TYPE sltpPar = 0, datetime expirationPar = 0,int deviationPar = 10, string commentPar = NULL)
+                              {Order(orderTypePar,volumePar,openPricePar,stopLossPar,takeProfitPar,sltpPar,expirationPar,deviationPar,commentPar);}
   };
 //+------------------------------------------------------------------+
 //|                                                                  |

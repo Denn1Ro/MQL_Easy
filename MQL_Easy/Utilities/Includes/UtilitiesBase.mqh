@@ -47,7 +47,8 @@ public:
    CError            Error;                    
    string            GetSymbol() {return this.Symbol;} 
    bool              SetSymbol(string symbolPar);
-   bool              CheckSymbol(string symbolPar);                    
+   bool              CheckSymbol(string symbolPar);  
+   int               AddSymbolsToMarketWatch(string &symbolsPar[]);                  
    double            Ask();
    double            Bid();
    double            Point();
@@ -102,6 +103,33 @@ bool CUtilitiesBase::CheckSymbol(string symbolPar)
       return false;
    }
    return true; 
+}
+
+
+//+------------------------------------------------------------------+
+//|     add symbols to market watch
+//+------------------------------------------------------------------+
+int CUtilitiesBase::AddSymbolsToMarketWatch(string &symbolsPar[])
+{
+   int symbolsAddedTemp = 0;
+   //-- check if it is empty
+   int symbolsArraySize = ArraySize(symbolsPar);
+   if(symbolsArraySize <= 0){
+      this.Error.CreateErrorCustom("The symbols array does not contain any symbol.");
+      return symbolsAddedTemp;
+   }
+   //-- check 
+   for(int i = 0; i < symbolsArraySize; i++){
+      string symbolTemp = symbolsPar[i];
+      bool isSelectedTemp = SymbolInfoInteger(symbolTemp,SYMBOL_SELECT);
+      if(!isSelectedTemp){
+         if(!SymbolSelect(symbolTemp,true)){
+            this.Error.CreateErrorCustom("The symbol "+symbolTemp+" doesn't exist.");
+         }else symbolsAddedTemp++;
+      }
+   }
+   //-- return the number of added symbols
+   return symbolsAddedTemp; 
 }
 
 

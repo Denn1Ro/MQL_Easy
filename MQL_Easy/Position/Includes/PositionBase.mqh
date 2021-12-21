@@ -39,7 +39,7 @@ public:
    //-- Group Config                      
    void                    SetGroupSymbol(string symbolpar){this.GroupSymbol = symbolpar;} 
    void                    SetGroupMagicNumber(long magicNumberPar){this.GroupMagicNumber = magicNumberPar;}
-   void                    setGroup(GROUP_POSITIONS groupPar){this.Group = groupPar;}         
+   void                    SetGroup(GROUP_POSITIONS groupPar){this.Group = groupPar;}         
    string                  GetGroupSymbol(){return this.GroupSymbol;}
    long                    GetGroupMagicNumber(){return this.GroupMagicNumber;} 
    GROUP_POSITIONS         GetGroup(){return this.Group;}  
