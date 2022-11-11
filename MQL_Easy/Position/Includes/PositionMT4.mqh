@@ -135,9 +135,9 @@ bool CPosition::SelectByTicket(long ticketPar)
       return true;
    }
    else{
+      this.ValidSelection = false;
       string msgTemp = "The Position WAS NOT Selected.";
       return this.Error.CreateErrorCustom(msgTemp,true,false,(__FUNCTION__));
-      this.ValidSelection = false;
    }
 }
 
