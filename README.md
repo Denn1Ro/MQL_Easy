@@ -237,7 +237,7 @@ printer.SetTitle("ATTENTION");
 printer.SetContainer("-");
 printer.Add("Action For The User","You need to enable Auto Trading!!!");
 printer.Add("Steps","Press the Auto Trading Button at the top of the terminal");
-printer.Print();
+printer.PrintContent();
 ```
 The above code display in the Expert’s tab:
 ```
